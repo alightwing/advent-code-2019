@@ -8,7 +8,7 @@ masses = [int(mass) for mass in raw_masses.split(',')]
 # Part 1
 
 def fuel_required(mass):
-	return int(mass/3) - 2
+    return int(mass/3) - 2
 
 total_fuel = sum([fuel_required(mass) for mass in masses])
 
@@ -17,13 +17,13 @@ print(total_fuel)
 # Part 2
 
 def fuel_required_inclusive(mass):
-	fuel_counter = 0
-	fuel_mass = fuel_required(mass)
-	while fuel_mass > 0:
-		fuel_counter += fuel_mass
-		# now get the extra fuel required for this fuel and repeat
-		fuel_mass = fuel_required(fuel_mass)
-	return fuel_counter
+    fuel_counter = 0
+    fuel_mass = fuel_required(mass)
+    while fuel_mass > 0:
+        fuel_counter += fuel_mass
+        # now get the extra fuel required for this fuel and repeat
+        fuel_mass = fuel_required(fuel_mass)
+    return fuel_counter
 
 total_fuel_inclusive = sum([fuel_required_inclusive(mass) for mass in masses])
 

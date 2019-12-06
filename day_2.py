@@ -20,25 +20,25 @@ input_program[2] = 2
 # Part 1
 
 def run_program(program):
-	current_pos = 0
-	while True:
-		# each operation is four parameters
-		program_chunk = program[current_pos:current_pos+4]
-		opcode = program_chunk[0]
-		# opcode 99 is end of program
-		if opcode == 99:
-			break
-		input_one = program[program_chunk[1]]
-		input_two = program[program_chunk[2]]
-		if opcode == 1:
-			output = input_one + input_two
-		elif opcode == 2:
-			output = input_one * input_two
-		else:
-			raise AttributeError('unrecognised opcode: {}'.format(opcode))
-		program[program_chunk[3]] = output
-		current_pos += 4
-	return program
+    current_pos = 0
+    while True:
+        # each operation is four parameters
+        program_chunk = program[current_pos:current_pos+4]
+        opcode = program_chunk[0]
+        # opcode 99 is end of program
+        if opcode == 99:
+            break
+        input_one = program[program_chunk[1]]
+        input_two = program[program_chunk[2]]
+        if opcode == 1:
+            output = input_one + input_two
+        elif opcode == 2:
+            output = input_one * input_two
+        else:
+            raise AttributeError('unrecognised opcode: {}'.format(opcode))
+        program[program_chunk[3]] = output
+        current_pos += 4
+    return program
 
 output_program = run_program(input_program.copy())
 print(output_program[0])
@@ -46,18 +46,18 @@ print(output_program[0])
 # Part 2
 
 def find_noun_verb(program_base):
-	# have to check all combinations 
-	for noun in range(100):
-		for verb in range(100):
-			# make a copy for each 
-			program_iter = program_base.copy()
-			program_iter[1] = noun
-			program_iter[2] = verb
-			program_iter = run_program(program_iter)
-			if program_iter[0] == 19690720:
-				print('Noun: ', noun)
-				print('Verb: ', verb)
-				print('Product: ', noun * 100 + verb)
-				return
+    # have to check all combinations 
+    for noun in range(100):
+        for verb in range(100):
+            # make a copy for each 
+            program_iter = program_base.copy()
+            program_iter[1] = noun
+            program_iter[2] = verb
+            program_iter = run_program(program_iter)
+            if program_iter[0] == 19690720:
+                print('Noun: ', noun)
+                print('Verb: ', verb)
+                print('Product: ', noun * 100 + verb)
+                return
 
 find_noun_verb(input_program)

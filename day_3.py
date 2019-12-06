@@ -14,36 +14,36 @@ wire_one_moves = "R990,U944,L921,U993,L64,U29,R899,D406,R841,U716,L32,U658,L830,
 wire_two_moves = "L994,U515,R163,U863,L343,U162,L875,D92,L483,D601,R79,D761,L389,U167,L145,U145,L247,U886,R61,U820,L584,D239,R402,U805,R956,U126,R615,D322,R431,D460,R397,D511,R805,D177,L778,U296,R599,U759,R40,U1,L422,U751,R94,U401,R504,U940,L564,U24,R595,U944,R815,U672,R787,D854,R579,D604,L62,U670,L516,U199,L639,D919,L485,U655,R391,U669,R772,D34,R868,D12,L108,U295,R701,D603,R493,U927,R29,D34,R499,U111,L87,U190,R884,D658,R474,D166,R921,U698,R592,U25,R710,D398,L26,U696,L432,D887,R469,U656,L428,D188,L543,D150,R160,U543,R743,U692,R618,D148,R956,U753,L175,D789,R897,U305,L137,D914,R330,D780,R744,D473,L754,U482,L975,D413,L698,U656,L177,U419,R13,D827,L67,D800,R369,U97,L34,D588,L41,D760,L164,U224,L921,D311,R489,U956,R277,U180,R724,U748,R785,U826,L426,D957,R303,U16,L729,U224,L712,U43,L280,D648,R987,D941,R154,D581,R876,U615,L480,D103,R636,D276,R948,U89,R434,D212,R837,D295,R532,D390,R374,D926,R911,D110,R258,U83,L955,U747,L925,D366,R571,U241,R628,D344,R919,U117,R337,D683,L720,U261,L124,D545,R979,D601,L906,D324,R441,U678,L978,U744,L472,D217,R799,U740,L77,U964,L278,U497,R441,U21,L37,U319,L24,D211,L44,U459,R35,D609,R900,D538,R397,D776,R629,D860,R519,D340,R168,U603,R46,U889,R897,D442,R997,U705,L82,D963,R941,U701,L347,D824,R269,U891,L569,D558,L867,U145,R121,D369,R542,U227,L198,U863,L755,U273,L734,D233,R578,U67,L821,U600,L203,D234,R695,U819,L639,D700,R295,D129,L612,U157,R212,U536,L968,U562,L999,D391,L231,U262,R334,D967,R463,U748,R842,D500,R860,U856,R263,D633,R460,D337,L880,U146,R910"
 
 def wire_coords(moves):
-	"""Generate a list of x, y coords for each step of the wire along the grid."""
-	splitmoves = moves.split(',')
-	# prime coords list with starting point of 0, 0
-	coords = [(0,0)]
-	for move in splitmoves:
-		direction = move[0]
-		# if moving left or down we want to decrement the coord instead
-		increment = -1 if direction in ('L', 'D') else 1
-		distance = int(move[1:])
-		# for each step of this move, add an updated x, y coordinate
-		for n in range(distance):
-			x, y = coords[-1]
-			if direction in ('L', 'R'):
-				x += increment
-			elif direction in ('U', 'D'):
-				y += increment
-			coords.append((x, y))
-	return coords
+    """Generate a list of x, y coords for each step of the wire along the grid."""
+    splitmoves = moves.split(',')
+    # prime coords list with starting point of 0, 0
+    coords = [(0,0)]
+    for move in splitmoves:
+        direction = move[0]
+        # if moving left or down we want to decrement the coord instead
+        increment = -1 if direction in ('L', 'D') else 1
+        distance = int(move[1:])
+        # for each step of this move, add an updated x, y coordinate
+        for n in range(distance):
+            x, y = coords[-1]
+            if direction in ('L', 'R'):
+                x += increment
+            elif direction in ('U', 'D'):
+                y += increment
+            coords.append((x, y))
+    return coords
 
 def find_best_intersections(wire_one_moves, wire_two_moves):
-	"""Find the target wire intersections."""
-	wire_one_coords = wire_coords(wire_one_moves)
-	wire_two_coords = wire_coords(wire_two_moves)
-	intersections = [i for i in set(wire_one_coords).intersection(wire_two_coords) if i != (0,0)]
-	# manhattan distance is just the sum of the absolute x and y coordinates for an intersection
-	raw_closest = min([abs(x)+ abs(y) for x, y in intersections])
-	# for least steps we can get the number of steps for each intersection by looking up the coord list index 
-	# for that intersection. starting the list with (0,0) means that the 1st actual step is index 1.
-	least_steps = min([wire_one_coords.index(i) + wire_two_coords.index(i) for i in intersections])
-	print("Closest: ", raw_closest)
-	print("Least steps: ", least_steps)
+    """Find the target wire intersections."""
+    wire_one_coords = wire_coords(wire_one_moves)
+    wire_two_coords = wire_coords(wire_two_moves)
+    intersections = [i for i in set(wire_one_coords).intersection(wire_two_coords) if i != (0,0)]
+    # manhattan distance is just the sum of the absolute x and y coordinates for an intersection
+    raw_closest = min([abs(x)+ abs(y) for x, y in intersections])
+    # for least steps we can get the number of steps for each intersection by looking up the coord list index 
+    # for that intersection. starting the list with (0,0) means that the 1st actual step is index 1.
+    least_steps = min([wire_one_coords.index(i) + wire_two_coords.index(i) for i in intersections])
+    print("Closest: ", raw_closest)
+    print("Least steps: ", least_steps)
 
 find_best_intersections(wire_one_moves, wire_two_moves)
